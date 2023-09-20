@@ -8,9 +8,11 @@ def is_not_auto_merge(line, auto_marks):
         return False
     return True
 
+infile = sys.argv[1]
+
 auto_update_marks = set()
 stanza = []
-with open('cvs2git-tmp/git-dump.dat') as fobj:
+with open(infile) as fobj:
     for i, line in enumerate(fobj):
         if not stanza or not line.startswith('commit '):
             stanza.append(line)
