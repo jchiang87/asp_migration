@@ -1,6 +1,6 @@
 ## Converting the ASP package in CVS to a git repo
 
-For converting a CVS repository to git, a straight-forward option is to use the `cvs2git` script which is part of the [cvs2svn](https://github.com/mhagger/cvs2svn) package.   Basic instructions to use `cvs2git` to convert a CVS repo are [here](https://www.mcs.anl.gov/~jacob/cvs2svn/cvs2git.html).  This README describes the process for the ASP set of modules and similar packages in the Fermi/SLAC CVS repository, with some additional steps to provide a cleaner commit history.
+For converting a CVS repository to git, a straight-forward option is to use the `cvs2git` script, which is part of the [cvs2svn](https://github.com/mhagger/cvs2svn) package.   Basic instructions to use `cvs2git` to convert a CVS repo are [here](https://www.mcs.anl.gov/~jacob/cvs2svn/cvs2git.html).  This README describes the process for the ASP set of modules and similar packages in the Fermi/SLAC CVS repository, with some additional steps to provide a cleaner commit history.
 
 ### Conversion steps
 
@@ -22,7 +22,7 @@ For converting a CVS repository to git, a straight-forward option is to use the 
            ./cvs/ASP
    ```
 
-1. Optionally remove the `ChangeLog,v` files or modify the `git-dump.dat` file to delete the "AutoUpdate" commit entries.   Our CVS `ChangeLog` entries duplicate the information in the commits extracted from the CVS histories of the individual files, and so they result in redundant entries in the git commit history.  Eliminating those redundant commits can be handled in a couple different ways:  1) Delete all of the `ChangeLog,v` files in the **local** copy of the CVS repository, or 2) run the `clean_dump_file.py` script in this repository to remove the entries associated with those `ChangeLog,v` files.  Deleting the files is probably more reliable, but using the `clean_dump_file.py` script avoids modifying the local CVS repo.
+1. Optionally remove the `ChangeLog,v` files or modify the `git-dump.dat` file to delete the "AutoUpdate" commit entries.   Our CVS `ChangeLog` entries duplicate the information in the commits extracted from the CVS histories of the individual files, and so they result in redundant entries in the git commit history.  Eliminating those redundant commits can be handled in a couple different ways:  1) Delete all of the `ChangeLog,v` files in the **local** copy of the CVS repository **prior** to running `cvs2git`, as described in the previous step, or 2) run the `clean_dump_file.py` script in this repository to remove the entries associated with those `ChangeLog,v` files.  Deleting the files is probably more reliable, but using the `clean_dump_file.py` script avoids modifying the local CVS repo.
 
    To generate the cleaned up dump file, I ran
    ```
