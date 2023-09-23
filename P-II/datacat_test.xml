@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline xmlns="http://glast-ground.slac.stanford.edu/pipeline"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+  xs:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline https://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.2/pipeline.xsd">
+  <task name="ASP_datacat_test" type="test" version="0.1">
+    <notation>Comment</notation>
+    <variables>
+      <var name="preamble"></var>
+      <var name="container_image">/sdf/group/fermi/sw/containers/fermi-rhel6.20230922.sif</var>
+      <var name="container_volumes">--bind /sdf</var>
+      <var name="container_wrap">singularity exec ${container_volumes} ${container_image}</var>
+      <var name="extra"></var>
+      <var name="jobsite">S3DFDATA</var>
+
+      <var name="datacatalog_imp">datacatalog</var>
+      <var name="TSTART">717120000</var>
+      <var name="TSTOP">717141600</var>
+      <var name="folder">/Data/Flight/Level1/LPA</var>
+      <var name="SCRIPT_DIR">/sdf/data/fermi/user/jchiang/asp_migration/P-II</var>
+      <var name="OUTPUTDIR">/sdf/data/fermi/user/jchiang/singularity_tests/L1data</var>
+    </variables>
+    <process name="catalogQuery">
+       <script><![CDATA[
+         print "using datacatalog implementation: ", datacatalog_imp
+         datacat = eval(datacatalog_imp)
+         def query(outfile, path, TSTART, TSTOP, folder):
+             output = pipeline.createFile(outfile)
+             opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
+             opt2 = '(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)' % locals()
+             opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
+             query = ('DataType == \"%s\" && (%s || %s || %s)'
+                      % (path, opt1, opt2, opt3))
+             datasetList = datacat.getDatasets(folder+'/*', query)
+             datasetList.writeToFile(output, 1)
+             pipeline.writeFile(output)
+         query("Ft1FileList", "EXTENDEDFT1", TSTART, TSTOP, folder)
+         query("Ft2FileList", "FT2", TSTART, TSTOP, folder)
+         ]]></script>
+    </process>
+    <process name="inspectLatData">
+      <job executable="${preamble} ${container_wrap} ${SCRIPT_DIR}/inspectLatData.sh" batchOptions="${extra}" />
+    </process>
+  </task>
+</pipeline>
