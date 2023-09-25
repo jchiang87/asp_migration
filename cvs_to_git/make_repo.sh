@@ -1,28 +1,23 @@
-# Convert ASP repo
-python clean_dump_file.py cvs2git-asp-tmp/git-dump.dat > cvs2git-asp-tmp/git-dump-clean.dat
+# Convert a CVS repo
+set -xe
 
-mkdir ASP
-cd ASP
+repo=$1
+
+tmpdir=cvs2git-${repo}-tmp
+python clean_dump_file.py ${tmpdir}/git-dump.dat > ${tmpdir}/git-dump-clean.dat
+
+mkdir ${repo}
+cd ${repo}
 git init
 
-git fast-import --export-marks=../cvs2git-asp-tmp/git-marks.dat < ../cvs2git-asp-tmp/git-blob.dat
-git fast-import --import-marks=../cvs2git-asp-tmp/git-marks.dat < ../cvs2git-asp-tmp/git-dump-clean.dat
+git fast-import --export-marks=../${tmpdir}/git-marks.dat < ../${tmpdir}/git-blob.dat
+git fast-import --import-marks=../${tmpdir}/git-marks.dat < ../${tmpdir}/git-dump-clean.dat
 
 git checkout master
 git reset --hard
 git branch -m main
 
-# Convert ASP-scons
 cd ..
-python clean_dump_file.py cvs2git-asp-scons-tmp/git-dump.dat > cvs2git-asp-scons-tmp/git-dump-clean.dat
-
-mkdir ASP-scons
-cd ASP-scons
-git init
-
-git fast-import --export-marks=../cvs2git-asp-scons-tmp/git-marks.dat < ../cvs2git-asp-scons-tmp/git-blob.dat
-git fast-import --import-marks=../cvs2git-asp-scons-tmp/git-marks.dat < ../cvs2git-asp-scons-tmp/git-dump-clean.dat
-
-git checkout master
-git reset --hard
-git branch -m main
+mkdir tmp
+cd tmp
+git clone --mirror ../${repo}

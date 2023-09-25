@@ -1,11 +1,10 @@
-mkdir cvs2git-asp-tmp
-python2 ./cvs2svn/cvs2git \
-        --blobfile=cvs2git-asp-tmp/git-blob.dat \
-        --dumpfile=cvs2git-asp-tmp/git-dump.dat \
-        ./cvs/ASP
+set -xe
 
-mkdir cvs2git-asp-scons-tmp
+repo=$1
+
+tmpdir=cvs2git-${repo}-tmp
+mkdir ${tmpdir}
 python2 ./cvs2svn/cvs2git \
-        --blobfile=cvs2git-asp-scons-tmp/git-blob.dat \
-        --dumpfile=cvs2git-asp-scons-tmp/git-dump.dat \
-        ./cvs/ASP-scons
+        --blobfile=${tmpdir}/git-blob.dat \
+        --dumpfile=${tmpdir}/git-dump.dat \
+        ./cvs/${repo}
