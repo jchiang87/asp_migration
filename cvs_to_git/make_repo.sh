@@ -16,8 +16,3 @@ git fast-import --import-marks=../${tmpdir}/git-marks.dat < ../${tmpdir}/git-dum
 git checkout master
 git reset --hard
 git branch -m main
-
-cd ..
-mkdir tmp
-cd tmp
-git clone --mirror ../${repo}
