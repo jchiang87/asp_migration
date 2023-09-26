@@ -40,4 +40,9 @@ For converting a CVS repository to git, a straight-forward option is to use the 
    git reset --hard
    git branch -m main
    ```
-   The resulting repo can now be imported into GitHub.
+
+1. To track the resulting repo in GitHub, create a new, empty, and appropriately named repo via the GitHub [web interface](https://github.com/new), then run `git push --mirror`, e.g.,
+   ```
+   git push --mirror git@github.com:jchiang87/ASP.git
+   ```
+   The `--mirror` option ensures that tags and other refs are pushed to the remote version on GitHub.
