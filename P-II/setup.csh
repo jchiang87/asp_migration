@@ -6,7 +6,7 @@ setenv GLAST_EXT ${GLASTGROUND}/GLAST_EXT/redhat6-x86_64-64bit-gcc44
 
 source ${INST_DIR}/bin/${BINDIR}/_setup.csh
 setenv TNS_ADMIN /sdf/home/g/glast/a/oracle/admin
-setenv ORACLE_HOME /sdf/data/fermi/user/jchiang/singularity_tests/oracle/11.1.0
+setenv ORACLE_HOME /afs/slac.stanford.edu/package/oracle/f/11.1.0/amd64_linux26/11.1.0
 setenv LD_LIBRARY_PATH ${ORACLE_HOME}/lib:${LD_LIBRARY_PATH}
 
 setenv GPL2 /sdf/data/fermi/user/jchiang/dev/GPLtools
