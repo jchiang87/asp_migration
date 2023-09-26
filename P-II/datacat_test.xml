@@ -2,12 +2,12 @@
 <pipeline xmlns="http://glast-ground.slac.stanford.edu/pipeline"
   xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
   xs:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline https://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.2/pipeline.xsd">
-  <task name="ASP_datacat_test" type="test" version="0.8">
+  <task name="ASP_datacat_test" type="test" version="0.9">
     <notation>Comment</notation>
     <variables>
       <var name="preamble"></var>
       <var name="container_image">/sdf/group/fermi/sw/containers/fermi-rhel6.sif</var>
-      <var name="container_volumes">--bind /sdf:/sdf,/sdf/group/fermi/sw/package:/afs/slac.stanford.package</var>
+      <var name="container_volumes">--bind /sdf:/sdf,/sdf/group/fermi/sw/package:/afs/slac.stanford.edu/package</var>
       <var name="container_wrap">singularity exec ${container_volumes} ${container_image}</var>
       <var name="extra"></var>
       <var name="jobsite">S3DFDATA</var>
